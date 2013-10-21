@@ -548,3 +548,42 @@ function twentythirteen_customize_preview_js() {
 	wp_enqueue_script( 'twentythirteen-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130226', true );
 }
 add_action( 'customize_preview_init', 'twentythirteen_customize_preview_js' );
+
+    <?php
+
+    if ( ! function_exists( 'breadcrumbs' ) ) :
+
+    function breadcrumbs() {
+
+    $separator = '&rsaquo;';
+    $home = 'Home';
+
+    echo '<div xmlns:v="http://rdf.data-vocabulary.org/#" class="breadcrumbs">';
+
+    global $post;
+
+    echo '  <span typeof="v:Breadcrumb">
+
+    <a rel="v:url" property="v:title" href="home_url( '/' )">$Home</a>
+    </span> ';
+
+    $category = get_the_category();
+
+    if ($category) {
+    foreach($category as $category) {
+    echo $separator . "<span typeof=\"v:Breadcrumb\">
+
+    <a rel=\"v:url\" property=\"v:title\" href=\"".get_category_link($category->term_id)."\">$category->name</a>
+    </span>";
+
+    }
+    }
+
+    echo '</div>';
+
+    }
+
+    endif;
+
+    ?>
+
